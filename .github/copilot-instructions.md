@@ -20,9 +20,19 @@ The Game Designer edits Unity scenes.
 
 The programmer creates reusable systems.
 
-Do not hardcode story, dialogue or game progression.
+Do not hardcode story, dialogue, or game progression; use Inspector/ScriptableObjects instead.
 
 Expose everything possible in the Inspector.
+
+Always ask for each implementation: "Does this support the feeling of anxiety and everyday routine?"
+
+---
+
+## Design Philosophy
+
+- Think as a gameplay programmer focused on atmosphere and anxiety.
+- Prioritize atmosphere over mechanics, narrative over systems, and inspector workflow over code.
+- Implement simple solutions.
 
 ---
 
