@@ -4,34 +4,27 @@ using UnityEngine;
 public class ConditionalDialogue : MonoBehaviour
 {
     [SerializeField] private GameFlagManager manager;
-    [SerializeField] private GameFlagData flag;
+    [SerializeField] private GameFlagData requiredFlag;
+    [SerializeField] private DialogueData dialogueIfTrue;
+    [SerializeField] private DialogueData dialogueIfFalse;
     [SerializeField] private DialogueManager dialogueManager;
-    [SerializeField] private DialogueData firstDialogue;
-    [SerializeField] private DialogueData repeatedDialogue;
 
-    // Designer calls this method (e.g. from Interactable.OnInteract)
     private void Awake()
     {
         if (manager == null)
-            manager = FindFirstObjectByType<GameFlagManager>();
+            manager = FindAnyObjectByType<GameFlagManager>();
+        if (dialogueManager == null)
+            dialogueManager = FindAnyObjectByType<DialogueManager>();
     }
+
     public void Play()
     {
-        if (dialogueManager == null) return;
+        if (manager == null || dialogueManager == null) return;
 
-        bool has = false;
-        if (manager != null && flag != null)
-            has = manager.GetFlag(flag);
+        bool flag = manager.GetFlag(requiredFlag);
+        var dialogue = flag ? dialogueIfTrue : dialogueIfFalse;
 
-        if (!has)
-        {
-            if (firstDialogue != null)
-                dialogueManager.StartDialogue(firstDialogue);
-        }
-        else
-        {
-            if (repeatedDialogue != null)
-                dialogueManager.StartDialogue(repeatedDialogue);
-        }
+        if (dialogue != null)
+            dialogueManager.StartDialogue(dialogue);
     }
 }
