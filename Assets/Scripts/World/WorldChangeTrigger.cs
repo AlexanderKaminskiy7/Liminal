@@ -33,7 +33,7 @@ public class WorldChangeTrigger : MonoBehaviour
 
     public void ApplyChanges()
     {
-        var fm = FindAnyObjectByType<GameFlagManager>();
+        var fm = FindFirstObjectByType<GameFlagManager>();
         if (fm == null) return;
 
         foreach (var c in changes)

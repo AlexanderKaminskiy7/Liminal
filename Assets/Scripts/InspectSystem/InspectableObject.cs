@@ -14,7 +14,7 @@ public class InspectableObject : MonoBehaviour
     private void Awake()
     {
         if (dialogueManager == null)
-            dialogueManager = FindAnyObjectByType<DialogueManager>();
+            dialogueManager = FindFirstObjectByType<DialogueManager>();
     }
 
     /// <summary>
