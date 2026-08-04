@@ -6,14 +6,17 @@ using System.Collections;
 [AddComponentMenu("Liminal/Door")]
 public class ConditionalDoor : MonoBehaviour
 {
-    [Tooltip("Имя сцены для загрузки. Должно быть в Build Settings.")]
+    [Tooltip("Имя сцены для загрузки (например: '02_Bedroom')")]
     [SerializeField] private string targetScene;
 
-    [Tooltip("Если false — дверь всегда заблокирована.")]
+    [Tooltip("Если false — дверь всегда заблокирована")]
     [SerializeField] private bool canEnter = true;
 
     [Header("Условия (все должны выполняться)")]
+    [Tooltip("Какой квест должен быть выполнен, чтобы пройти")]
     [SerializeField] private QuestData requiredQuestCompleted;
+
+    [Tooltip("Какой флаг должен быть установлен")]
     [SerializeField] private GameFlagData requiredFlag;
 
     [Header("Если заблокировано")]
@@ -31,6 +34,9 @@ public class ConditionalDoor : MonoBehaviour
             dialogueManager = FindAnyObjectByType<DialogueManager>();
     }
 
+    /// <summary>
+    /// Привяжи к Interactable.OnInteract в инспекторе.
+    /// </summary>
     public void Interact()
     {
         if (!canEnter)
