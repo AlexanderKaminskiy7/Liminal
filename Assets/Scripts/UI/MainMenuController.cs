@@ -1,31 +1,49 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 [AddComponentMenu("Liminal/Main Menu Controller")]
 public class MainMenuController : MonoBehaviour
 {
-    // Buttons should be connected manually via Button.OnClick in the Inspector.
+    [Header("Кнопки подключаются через Inspector (Button.OnClick)")]
 
-    // Loads the intro scene. Intentionally uses the literal scene name as requested.
-    public void PlayGame()
+    [Tooltip("Сцена, с которой начинается новая игра")]
+    [SerializeField] private string newGameScene = "01_Intro";
+
+    [Tooltip("Если есть сохранение — загрузить эту сцену")]
+    public void ContinueGame()
     {
-        SceneManager.LoadScene("01_Intro");
+        if (SaveManager.HasSave())
+        {
+            SaveManager.Load();
+            string scene = SaveManager.GetSavedSceneName();
+            if (!string.IsNullOrEmpty(scene))
+            {
+                SceneManager.LoadScene(scene);
+                return;
+            }
+        }
+        Debug.Log("Нет сохранения для продолжения.");
+    }
+
+    public void NewGame()
+    {
+        SaveManager.DeleteSave();
+        SceneManager.LoadScene(newGameScene);
     }
 
     public void OpenSettings()
     {
-        Debug.Log("Settings not implemented");
+        Debug.Log("Настройки: пока заглушка.");
     }
 
     public void OpenCredits()
     {
-        Debug.Log("Credits not implemented");
+        Debug.Log("Credits: пока заглушка.");
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quit requested");
+        Debug.Log("Выход из игры.");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

@@ -20,7 +20,6 @@ public class FadeCanvas : MonoBehaviour
 
         if (fadeImage != null)
         {
-            // Ensure image is black by default. Designer can change sprite but color remains black.
             var c = fadeImage.color;
             c.r = 0f; c.g = 0f; c.b = 0f;
             fadeImage.color = c;
@@ -34,9 +33,7 @@ public class FadeCanvas : MonoBehaviour
         {
             if (canvasGroup == null) return;
             canvasGroup.alpha = Mathf.Clamp01(value);
-            // When alpha > 0, block raycasts to prevent interaction
             canvasGroup.blocksRaycasts = canvasGroup.alpha > 0f;
-            canvasGroup.interactable = canvasGroup.alpha == 0f ? false : false; // keep non-interactable; CanvasGroup is only used for blocking
         }
     }
 

@@ -20,14 +20,15 @@ public class IntroController : MonoBehaviour
             dialogueManager.StartDialogue(introDialogue);
     }
 
-    // Can be called from UI or DialogueManager via Inspector wiring
     public void FinishIntro()
     {
         if (string.IsNullOrEmpty(nextSceneName))
         {
-            Debug.LogWarning("IntroController: nextSceneName is empty. Aborting scene load.");
+            Debug.LogWarning("IntroController: nextSceneName пустой.");
             return;
         }
+
+        SaveManager.Save();
 
         if (fadeController != null)
             fadeController.FadeOut(fadeDuration);

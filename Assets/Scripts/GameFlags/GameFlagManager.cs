@@ -9,13 +9,11 @@ public class GameFlagManager : MonoBehaviour
 
     private void Awake()
     {
-        // Use static instance to prevent duplicates
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
@@ -37,4 +35,28 @@ public class GameFlagManager : MonoBehaviour
     {
         flags.Clear();
     }
+
+    // ===== ДОБАВЛЕНО для SaveManager =====
+    public List<string> GetSetFlagIds()
+    {
+        var result = new List<string>();
+        foreach (var pair in flags)
+        {
+            if (pair.Key != null && pair.Value)
+                result.Add(pair.Key.id);
+        }
+        return result;
+    }
+
+    public void LoadFlags(List<string> ids)
+    {
+        flags.Clear();
+        var allFlags = Resources.LoadAll<GameFlagData>("");
+        foreach (var f in allFlags)
+        {
+            if (ids.Contains(f.id))
+                flags[f] = true;
+        }
+    }
+    // =====================================
 }

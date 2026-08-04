@@ -10,9 +10,10 @@ public class DialogueManager : MonoBehaviour
     private DialogueData current;
     private int index;
 
+    public bool IsPlaying => current != null;
+
     public void StartDialogue(DialogueData data)
     {
-        // Ignore if a dialogue is already running
         if (current != null)
             return;
 
